@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(queryString)
 const id = urlParams.get("id")
 if (id != null) {
     let itemPrice = 0
-    let imgUrl, altText
+    let imgUrl, altText, articleName
 }
 
 fetch(`http://localhost:3000/api/products/${id}`)
@@ -15,10 +15,11 @@ function handleData(kanap) {
     itemPrice = price
     imgUrl = imageUrl
     altText = altTxt
+    articleName = name
     makeImage(imageUrl, altTxt)
     makeTitle(name)
     makePrice(price)
-    makeDescription(description)
+    makeCartContent(description)
     makeColors(colors)
 }
 
@@ -38,7 +39,7 @@ function makePrice(price) {
     const span = document.querySelector("#price")
     if (span !=null) span.textContent = price
 }
-function makeDescription(description){
+function makeCartContent(description){
     const p = document.querySelector("#description")
     if (p !=null) p.textContent = description
 } 
@@ -77,7 +78,8 @@ function saveOrder(color, quantity) {
         quantity: Number(quantity),
         price: itemPrice,
         imageUrl: imgUrl,
-        altTxt: altText
+        altTxt: altText,
+        name: articleName
     }
     localStorage.setItem(id, JSON.stringify(data))
 }
