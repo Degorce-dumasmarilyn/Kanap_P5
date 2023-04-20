@@ -12,14 +12,31 @@ function retrieveItemsFromCache() {
   }
 }
 
+function displayTotalPrice(item) {
+  const totalQuantity = document.querySelector("#totalQuantity")
+  totalQuantity.textContent = item.quantity
+}
+
 function displayItem(item) {
   const article = makeArticle(item)
   const imageDiv = makeImageDiv(item)
   article.appendChild(imageDiv)
-
   const cardItemContent = makeCartContent(item)
   article.appendChild(cardItemContent)
   displayArticle(article)
+  displayTotalPrice(item)
+}
+
+function displayTotalPrice(item) {
+  let total = 0
+  const   totalPrice =document.querySelector("#totalPrice")
+  cart.forEach(item => {
+    const totalUnitPrice = item.price * item.quantity
+    total += totalUnitPrice
+  })  
+  console.log(total)
+  totalPrice.textContent = total
+
 }
 
 
@@ -40,27 +57,38 @@ function makeSettings(item) {
   const settings = document.createElement("div")
   settings.classList.add("cart__item__content__settings")
   addQuatityToSettings(settings, item)
+  addDeleteToSettings(settings)
   return settings
 }
 
-function addQuatityToSettings(settings, item) {
-   const quantity = document.createElement("div")
-   quantity.classList.add("cart__item__content__settings__quantity")
-   const p = document.createElement("p")
-   p.textContent ="Qté :"
-   quantity.appendChild(p)
-   const input = document.createElement("input")
-   input.type = "number"
-   input.classList.add("itemQuantity")
-   input.name = "itemQuantity"
-   input.min = "1"
-   input.max = "100"
-   input.value = item.quantity
-   settings.appendChild(input)
-
-
+function addDeleteToSettings(settings) {
+  const div = document.createElement("div")
+  div.classList.add("cart__item__content__settings__delete")
+  const p = document.createElement("p")
+  p.textContent = "supprimer"
+  div.appendChild(p)
+  settings.appendChild(div)
 
 }
+
+function addQuatityToSettings(settings, item) {
+  const quantity = document.createElement("div")
+  quantity.classList.add("cart__item__content__settings__quantity")
+  const p = document.createElement("p")
+  p.textContent ="Qté :"
+  quantity.appendChild(p)
+  const input = document.createElement("input")
+  input.type = "number"
+  input.classList.add("itemQuantity")
+  input.name = "itemQuantity"
+  input.min = "1"
+  input.max = "100"
+  input.value = item.quantity
+
+  quantity.appendChild(input)
+  settings.appendChild(quantity)
+}
+
 
 function makeDescription(item) {
   const description = document.createElement("div")
