@@ -64,15 +64,16 @@ if (button !=null)
 
 function handleClick () {
     const color = document.querySelector("#colors").value
-        const quantity = document.querySelector("#quantity").value
+    const quantity = document.querySelector("#quantity").value
         
-        if (isOrderInvalid(color, quantity)) return
-        saveOrder(color, quantity)
-        redirectToCart()
+    if (isOrderInvalid(color, quantity)) return
+    saveOrder(color, quantity)
+    redirectToCart()    
 }
 
 function saveOrder(color, quantity) {
-     const data = {
+    const key = `${id}-${color}`
+    const data = {
         id: id,
         color: color,
         quantity: Number(quantity),
@@ -81,7 +82,7 @@ function saveOrder(color, quantity) {
         altTxt: altText,
         name: articleName
     }
-    localStorage.setItem(id, JSON.stringify(data))
+    localStorage.setItem(key, JSON.stringify(data))
 }
 function isOrderInvalid(color, quantity) {
     if(color == null || color === "" || quantity == null == null || quantity == 0){
