@@ -81,8 +81,19 @@ function addDeleteToSettings(settings, item) {
 }
 
 function deleteItem(item){
-  console.log("item to delete", item)
-  const itemToDelete = cart.find(item =>item.id)
+  const itemToDelete = cart.findIndex(
+  (product) =>product.id === item.id && product.color === item.color)
+  cart.splice(itemToDelete, 1)
+  displayTotalPrice()
+  displayTotalQuantity()
+  deleteDataFromCache(item)
+  deleteArticleFromPage(item)
+}
+
+function deleteArticleFromPage(item){
+  const articleToDelete =document.querySelector(
+    `article[data-id="${item.id}][data-color="${item.color}"]`)
+  articleToDelete.remove()
 }
 
 function addQuatityToSettings(settings, item) {
@@ -113,6 +124,10 @@ function updatePriceAndQuantity(id, newValue, item) {
   displayTotalQuantity()
   displayTotalPrice()
   saveNewDataToCache(item)
+}
+function deleteDataFromCache(item){
+  const key = `${item.id}-${item.color}`
+  localStorage.removeItem(key)
 }
 
 function saveNewDataToCache(item) {
