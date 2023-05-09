@@ -3,13 +3,8 @@ const cart = []
 retrieveItemsFromCache()
 cart.forEach((item) => displayItem (item))
 
-
-
-
-
-
-
-
+const orderButton = document.querySelector("#order")
+orderButton.addEventListener("click", (e) => submitForm(e))
 
 function retrieveItemsFromCache() {
   const numberOfItems = localStorage.length 
@@ -91,7 +86,7 @@ function deleteItem(item){
 }
 
 function deleteArticleFromPage(item){
-  const articleToDelete =document.querySelector(
+  const articleToDelete = document.querySelector(
     `article[data-id="${item.id}][data-color="${item.color}"]`)
   articleToDelete.remove()
 }
@@ -169,9 +164,96 @@ function makeArticle(item) {
 function makeImageDiv(item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__img")
+
   const image = document.createElement("img")
   image.src = item.imageUrl
   image.alt = item.altTxt
   div.appendChild(image)
   return div
 }
+
+function submitForm(e){
+  e.preventDefault()
+  if (cart.length === 0) { 
+    alert("Please select items to buy")
+    return
+  }
+
+  if (isFormInvalid()) return
+  if (isEmailInvalid()) return
+  
+  const body = makeRequestBody()
+  fetch("http://localhost:3000/api/products/order", {
+    method:"POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      
+    }
+  })
+  .then((res) => res.json())
+  .then((data) => { 
+    const orderId = data.orderId
+    window.location.href = "/html/confirmation.html" + "?orderId=" + orderId
+   
+  })
+  .catch((err) => console.error(err))
+}
+function isEmailInvalid(){
+  const email = document.querySelector("#email").value
+    const regex = /^[A-Za-z0-9+_.-]+@(.+)$/
+  if (regex.test(email) === false) {
+    alert("Please enter valid email")
+    return true
+  }
+  return false
+}
+
+function isFormInvalid() {
+  const form = document.querySelector(".cart__order__form")
+  const inputs = form.querySelectorAll("input")
+  inputs.forEach((input) => {
+    if (input.value === "") {
+      alert("Please fill all the fields")
+      return true
+    }
+    return false
+  })
+}
+
+function makeRequestBody() {
+  const form = document.querySelector(".cart__order__form")
+  const firstName = form.elements.firstName.value
+  const lastName = form.elements.firstName.value
+  const address = form.elements.firstName.value
+  const city = form.elements.firstName.value
+  const email = form.elements.firstName.value
+  const body = {
+    contact: {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      city: city,
+      email: email
+    },
+    products: getIdsFromCache()
+  }
+  console.log(body)
+  return body
+}
+
+function getIdsFromCache(){
+  const numberOfProducts = localStorage.length
+  const ids = []
+  for (let i = 0; i < numberOfProducts; i++){
+    const key = localStorage.key(i)
+    console.log(key)
+    const id = key.split("-")[0]
+    ids.push(id)
+  }
+  return ids
+}
+  
+  
+  
+ 

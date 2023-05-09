@@ -6,7 +6,7 @@ if (id != null) {
     let imgUrl, altText, articleName
 }
 
-fetch(`http://localhost:3000/api/products/${id}`)
+fetch (`http://localhost:3000/api/products/${id}`)
 .then((response) => response.json())
 .then(res => handleData(res))
 
