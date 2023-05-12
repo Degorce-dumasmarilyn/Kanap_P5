@@ -87,11 +87,11 @@ function deleteItem(item){
 
 function deleteArticleFromPage(item){
   const articleToDelete = document.querySelector(
-    `article[data-id="${item.id}][data-color="${item.color}"]`)
+    `article[data-id="${item.id}"][data-color="${item.color}"]`)
   articleToDelete.remove()
 }
 
-function addQuatityToSettings(settings, item) {
+function addQuatityToSettings(settings, item) {saveNewDataToCache
   const quantity = document.createElement("div")
   quantity.classList.add("cart__item__content__settings__quantity")
   const p = document.createElement("p")
