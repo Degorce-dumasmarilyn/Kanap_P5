@@ -1,3 +1,6 @@
+//-------------------------------------------------------------------------------------------
+//interroge la base de données et récupération des produits pour les afficher sur la page d'accueil//
+//-------------------------------------------------------------------------------------------
 fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => addProducts(data))
@@ -10,15 +13,11 @@ fetch("http://localhost:3000/api/products")
   //price: 1849
   //_id: "107fb5b75607497b96722bda5b504926"
 
+// récupération des données(imges de tout les kanaps)//
+
  function addProducts(data) {
-  //const _id = data[0]._id
-  //const imageUrl = data[0].imageUrl
-  //const altTxt = data[0].altTxt
-  //const name = data[0].name
-  //const description = data[0].description
-
-
-data.forEach((kanap) => {
+  
+  data.forEach((kanap) => {
   
   const {_id, imageUrl, altTxt, name, description} = kanap
   const anchor = makeAnchor(_id)
@@ -31,17 +30,20 @@ data.forEach((kanap) => {
   appendArticleToAnchor(anchor, article)
  }) 
 } 
-
+// rajout a l article//
 function apendElementsToArticle(article, image, h3, p) {
   article.appendChild(image)
   article.appendChild(h3)
   article.appendChild(p)
 }
+
+//recuperation de ID//
 function makeAnchor(id) {
   const anchor = document.createElement("a")
   anchor.href = "./product.html?id=" + id
   return anchor
 }
+//descriptif+fab de l'article//
 
 function appendArticleToAnchor(anchor, article) {
   const items = document.querySelector("#items")
@@ -50,6 +52,7 @@ function appendArticleToAnchor(anchor, article) {
     anchor.appendChild(article)
   }
 }
+//recuperation des images//
  function makeImage(imageUrl, altTxt) {
   const image = document.createElement("img")
   image.src = imageUrl
@@ -58,14 +61,14 @@ function appendArticleToAnchor(anchor, article) {
   image.removeAttribute("style")
   return image
 } 
-
+ 
 function makeH3(name) {
   const h3 = document.createElement("h3")
   h3.textContent = name 
   h3.classList.add("productName")
   return h3
 }
-
+//rajout de la description a l article//
 function makeParagraph(description) {
   const p =  document.createElement("p")
   p.textContent = description
