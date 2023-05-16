@@ -1,3 +1,4 @@
+//recuperation du id//
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 const id = urlParams.get("id")
@@ -5,11 +6,11 @@ if (id != null) {
     let itemPrice = 0
     let imgUrl, altText, articleName
 }
-
+//requête server//
 fetch (`http://localhost:3000/api/products/${id}`)
 .then((response) => response.json())
 .then(res => handleData(res))
-
+//récuperation des données//
 function handleData(kanap) {
     const { altTxt, colors, description, imageUrl, name, price } = kanap
     itemPrice = price
@@ -22,7 +23,7 @@ function handleData(kanap) {
     makeCartContent(description)
     makeColors(colors)
 }
-
+//affichage de l'image du kanap//
 function makeImage(imageUrl, altTxt) {
     const image = document.createElement("img")
     image.src = imageUrl
@@ -30,19 +31,22 @@ function makeImage(imageUrl, altTxt) {
     const parent = document.querySelector(".item__img")
     if (parent != null) parent.appendChild(image)
 }
-
+//description du nom du kanap//
 function makeTitle(name) {
     const h1 = document.querySelector("#title")
     if (h1 !=null) h1.textContent = name
 }
+//affichage du prix du kanap//
 function makePrice(price) {
     const span = document.querySelector("#price")
     if (span !=null) span.textContent = price
 }
+//affichage de la description du kanap//
 function makeCartContent(description){
     const p = document.querySelector("#description")
     if (p !=null) p.textContent = description
 } 
+//sélections de la colors du kanap//
 function makeColors(colors) {
     const select = document.querySelector("#colors")
     if (select !=null) {
@@ -51,7 +55,7 @@ function makeColors(colors) {
             option.value = color
             option.textContent = color
             select.appendChild(option)
-            console.log(option)
+           
         })
     }    
 }               
