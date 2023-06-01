@@ -5,7 +5,7 @@ cart.forEach((item) => displayItem (item))
 
 const orderButton = document.querySelector("#order")
 orderButton.addEventListener("click", (e) => submitForm(e))
-
+//parse fabrique un objet//
 function retrieveItemsFromCache() {
   const numberOfItems = localStorage.length 
   for (let i = 0; i < numberOfItems; i++) {
@@ -14,12 +14,12 @@ function retrieveItemsFromCache() {
     cart.push(itemObject)
   }
 }
-
+//affiche le total du prix du panier//
 function displayTotalPrice(item) {
   const totalQuantity = document.querySelector("#totalQuantity")
   totalQuantity.textContent = item.quantity
 }
-
+//toutes les fonctions dans le item//
 function displayItem(item) {
   const article = makeArticle(item)
   const imageDiv = makeImageDiv(item)
@@ -30,13 +30,13 @@ function displayItem(item) {
   displayTotalQuantity(item)
   displayTotalPrice()
 }
-
+//recalcul//
 function displayTotalQuantity() {
   const totalQuantity = document.querySelector("#totalQuantity")
   const total = cart.reduce((total, item) => total + item.quantity, 0)
   totalQuantity.textContent = total
 }
-
+//recalcul//
 function displayTotalPrice() {
   const totalPrice = document.querySelector("#totalPrice")
   const total = cart.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -63,7 +63,7 @@ function makeSettings(item) {
   addDeleteToSettings(settings, item)
   return settings
 }
-
+//bouton supprime//
 function addDeleteToSettings(settings, item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__content__settings__delete")
@@ -77,7 +77,7 @@ function addDeleteToSettings(settings, item) {
 
 function deleteItem(item){
   const itemToDelete = cart.findIndex(
-  (product) =>product.id === item.id && product.color === item.color)
+  (product) => product.id === item.id && product.color === item.color)
   cart.splice(itemToDelete, 1)
   displayTotalPrice()
   displayTotalQuantity()
@@ -111,7 +111,7 @@ function addQuatityToSettings(settings, item) {saveNewDataToCache
   quantity.appendChild(input)
   settings.appendChild(quantity)
 }
-
+//sauvegarde du panier//
 function updatePriceAndQuantity(id, newValue, item) {
   const itemToUpdate = cart.find((item) => item.id === id)
   itemToUpdate.quantity = Number(newValue)
@@ -160,7 +160,7 @@ function makeArticle(item) {
   article.dataset.color = item.color
   return article
 }
-
+//retourne la div//
 function makeImageDiv(item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__img")

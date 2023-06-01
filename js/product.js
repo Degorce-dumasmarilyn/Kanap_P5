@@ -2,6 +2,7 @@
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 const id = urlParams.get("id")
+//recupere le prix depuis api et le colle dans la variable//
 if (id != null) {
     let itemPrice = 0
     let imgUrl, altText, articleName
@@ -22,6 +23,7 @@ function handleData(kanap) {
     makePrice(price)
     makeCartContent(description)
     makeColors(colors)
+    
 }
 //affichage de l'image du kanap//
 function makeImage(imageUrl, altTxt) {
@@ -34,47 +36,46 @@ function makeImage(imageUrl, altTxt) {
 //description du nom du kanap//
 function makeTitle(name) {
     const h1 = document.querySelector("#title")
-    if (h1 !=null) h1.textContent = name
+    if (h1 != null) h1.textContent = name
 }
 //affichage du prix du kanap//
 function makePrice(price) {
     const span = document.querySelector("#price")
-    if (span !=null) span.textContent = price
+    if (span != null) span.textContent = price
 }
 //affichage de la description du kanap//
 function makeCartContent(description){
     const p = document.querySelector("#description")
-    if (p !=null) p.textContent = description
+    if (p != null) p.textContent = description
 } 
 //sélections de la colors du kanap//
 function makeColors(colors) {
     const select = document.querySelector("#colors")
-    if (select !=null) {
+    if (select != null) {
         colors.forEach((color) => {
             const option = document.createElement("option")
             option.value = color
             option.textContent = color
             select.appendChild(option)
-           
         })
     }    
 }               
   
 const button = document.querySelector("#addToCart")
-if (button !=null)
+if (button != null)
     button.addEventListener("click", handleClick)     
     
-
 
 function handleClick () {
     const color = document.querySelector("#colors").value
     const quantity = document.querySelector("#quantity").value
-        
+
     if (isOrderInvalid(color, quantity)) return
     saveOrder(color, quantity)
-    redirectToCart()    
+    redirectToCart()
 }
 
+      //sauvegarde dans localstorage//
 function saveOrder(color, quantity) {
     const key = `${id}-${color}`
     const data = {
@@ -84,12 +85,23 @@ function saveOrder(color, quantity) {
         price: itemPrice,
         imageUrl: imgUrl,
         altTxt: altText,
-        name: articleName
+        name: articleName 
+    } 
+    //modifie les données exsistantes en ajoutant la nouvelle quantity exsistante//
+    const storedData = JSON.parse(localStorage.getItem(key))
+    if(storedData){
+        storedData.quantity += Number(quantity)
+        localStorage.setItem(key, JSON.stringify(storedData))
     }
-    localStorage.setItem(key, JSON.stringify(data))
+    else{localStorage.setItem(key, JSON.stringify(data))
+    }
 }
+    
+    
+
+// si c'est mal rempli message d erreur//
 function isOrderInvalid(color, quantity) {
-    if(color == null || color === "" || quantity == null == null || quantity == 0){
+    if(color == null || color === "" || quantity == null  || quantity === 0){
         alert("Please select a color and quantity")
         return true
     }
