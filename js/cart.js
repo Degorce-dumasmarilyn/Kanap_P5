@@ -111,7 +111,12 @@ function addQuatityToSettings(settings, item) {saveNewDataToCache
   quantity.appendChild(input)
   settings.appendChild(quantity)
 }
-//sauvegarde du panier//
+//Cette fonction sert à mettre à jour la quantité et le prix d'un article dans un panier //
+//Elle prend en paramètre l'identifiant de l'article//
+//La fonction recherche d'abord l'article correspondant dans le tableau de panier (cart) en utilisant l'identifiant fourni.//
+// Ensuite, elle met à jour la quantité de l'article à la nouvelle valeur fournie et met également à jour la quantité de l'objet 'item'.// 
+//La fonction affiche ensuite la quantité et le prix total du panier en appelant les fonctions 'displayTotalQuantity' et 'displayTotalPrice'.// 
+//Enfin, elle enregistre les données mises à jour dans le cache en appelant la fonction 'saveNewDataToCache'.//
 function updatePriceAndQuantity(id, newValue, item) {
   const itemToUpdate = cart.find((item) => item.id === id)
   itemToUpdate.quantity = Number(newValue)
@@ -124,7 +129,9 @@ function deleteDataFromCache(item){
   const key = `${item.id}-${item.color}`
   localStorage.removeItem(key)
 }
-
+//Cette fonction sert à sauvegarder des données dans la mémoire locale du navigateur (localStorage)//
+// en utilisant une clé unique générée à partir de l'id et de la couleur de l'objet passé en paramètre.//
+// Les données sont converties en format JSON avant d'être enregistrées.//
 function saveNewDataToCache(item) {
   const dataToSave = JSON.stringify(item)
   const key = `${item.id}-${item.color}`
@@ -202,7 +209,7 @@ function submitForm(e){
   })
   .catch((err) => console.error(err))
 }
-//sert:si mail mal rempli message erreur s'affiche//
+//fonction qui:si mail mal rempli message erreur s'affiche//
 function isEmailInvalid(){
   const email = document.querySelector("#email").value
     const regex = /^[A-Za-z0-9+_.-]+@(.+)$/
@@ -212,7 +219,7 @@ function isEmailInvalid(){
   }
   return false
 }
-// sert :si formulaire mal rempli avoir un message erreur s'affiche//
+// fonction permet :si formulaire mal rempli avoir un message erreur s'affiche//
 function isFormInvalid() {
   const form = document.querySelector(".cart__order__form")
   const inputs = form.querySelectorAll("input")
