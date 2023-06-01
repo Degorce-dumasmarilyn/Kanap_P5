@@ -148,11 +148,13 @@ function makeDescription(item) {
   return description
   
 }
-
+//Cette fonction sert à afficher un article dans la page web en ajoutant l'élément HTML 'article'
+// à l'élément ayant comme identifiant "cart__items".
+// Cela peut être utile pour afficher les articles ajoutés au panier//
 function displayArticle(article) {
   document.querySelector("#cart__items").appendChild(article)
 }
-
+// fariquation de l article//
 function makeArticle(item) {
   const article = document.createElement("article")
   article.classList.add("cart__item")
@@ -160,7 +162,7 @@ function makeArticle(item) {
   article.dataset.color = item.color
   return article
 }
-//retourne la div//
+//Cette fonction sert à créer et retourner un élément div contenant une image//
 function makeImageDiv(item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__img")
@@ -171,7 +173,8 @@ function makeImageDiv(item) {
   div.appendChild(image)
   return div
 }
-
+//sert a effectué une requête POST vers l'URL 
+//avec un corps de requête JSON qui est renvoyé par la fonction makeRequestBody//
 function submitForm(e){
   e.preventDefault()
   if (cart.length === 0) { 
@@ -183,12 +186,12 @@ function submitForm(e){
   if (isEmailInvalid()) return
   
   const body = makeRequestBody()
+  //URL//
   fetch("http://localhost:3000/api/products/order", {
     method:"POST",
     body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
-      
     }
   })
   .then((res) => res.json())
@@ -199,6 +202,7 @@ function submitForm(e){
   })
   .catch((err) => console.error(err))
 }
+//sert:si mail mal rempli message erreur s'affiche//
 function isEmailInvalid(){
   const email = document.querySelector("#email").value
     const regex = /^[A-Za-z0-9+_.-]+@(.+)$/
@@ -208,7 +212,7 @@ function isEmailInvalid(){
   }
   return false
 }
-
+// sert :si formulaire mal rempli avoir un message erreur s'affiche//
 function isFormInvalid() {
   const form = document.querySelector(".cart__order__form")
   const inputs = form.querySelectorAll("input")
@@ -220,7 +224,8 @@ function isFormInvalid() {
     return false
   })
 }
-
+//sert à créer et retourner un objet body qui contient les informations d'un formulaire de commande//
+// ainsi que les ids des produits présent dans le cache de l application.//
 function makeRequestBody() {
   const form = document.querySelector(".cart__order__form")
   const firstName = form.elements.firstName.value
@@ -241,7 +246,7 @@ function makeRequestBody() {
   console.log(body)
   return body
 }
-
+//sert à récupérer les identifiants des produits stockés dans le localStorage//
 function getIdsFromCache(){
   const numberOfProducts = localStorage.length
   const ids = []
