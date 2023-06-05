@@ -17,12 +17,12 @@ fetch("http://localhost:3000/api/products")
   const h3 = makeH3(name)
   const p = makeParagraph(description)
 
-  apendElementsToArticle(article, image, h3, p)
+  appendElementsToArticle(article, image, h3, p)
   appendArticleToAnchor(anchor, article)
  }) 
 } 
 // rajout a l article//
-function apendElementsToArticle(article, image, h3, p) {
+function appendElementsToArticle(article, image, h3, p) {
   article.appendChild(image)
   article.appendChild(h3)
   article.appendChild(p)
@@ -43,7 +43,8 @@ function appendArticleToAnchor(anchor, article) {
     anchor.appendChild(article)
   }
 }
-//recuperation des images//
+//La fonction makeImage() sert à créer un élément img en HTML, avec une source d'image (imageUrl) et un texte alternatif (altTxt).
+// Cette fonction supprime également les attributs title et style de l'image et renvoie l'élément créé //
  function makeImage(imageUrl, altTxt) {
   const image = document.createElement("img")
   image.src = imageUrl
@@ -52,14 +53,16 @@ function appendArticleToAnchor(anchor, article) {
   image.removeAttribute("style")
   return image
 } 
- 
+ // fonction sert à créer un élément HTML "h3" en y ajoutant du texte et une classe CSS avec la méthode ".classList.add"//
 function makeH3(name) {
   const h3 = document.createElement("h3")
   h3.textContent = name 
   h3.classList.add("productName")
   return h3
 }
-//rajout de la description a l article//
+//Cette fonction permet de créer un élément de paragraphe ("p") dans le document HTML, //
+//de lui attribuer le contenu de la variable "description", //
+//de lui ajouter une classe "productDescription", et de retourner cet élément créé//
 function makeParagraph(description) {
   const p =  document.createElement("p")
   p.textContent = description

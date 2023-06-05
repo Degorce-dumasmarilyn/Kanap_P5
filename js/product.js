@@ -25,7 +25,7 @@ function handleData(kanap) {
     makeColors(colors)
     
 }
-//affichage de l'image du kanap//
+//fonction cherche un élément DOM spécifique avec la classe "item__img" et y ajoute l'image à l'aide de la méthode appendChild()//
 function makeImage(imageUrl, altTxt) {
     const image = document.createElement("img")
     image.src = imageUrl
@@ -60,12 +60,13 @@ function makeColors(colors) {
         })
     }    
 }               
-  
+  //fonction sert à ajouter un événement de click sur un élément HTML identifier par son ID //
 const button = document.querySelector("#addToCart")
 if (button != null)
     button.addEventListener("click", handleClick)     
     
-
+// gére le processus de commande  en récupérant  les informations entrées par l utilisateur//
+// verifie valide puis sauvegardeet renvoie au panier//
 function handleClick () {
     const color = document.querySelector("#colors").value
     const quantity = document.querySelector("#quantity").value
@@ -75,7 +76,7 @@ function handleClick () {
     redirectToCart()
 }
 
-      //sauvegarde dans localstorage//
+    //sauvegarde dans localstorage//
 function saveOrder(color, quantity) {
     const key = `${id}-${color}`
     const data = {
@@ -88,15 +89,17 @@ function saveOrder(color, quantity) {
         name: articleName 
     } 
     //modifie les données exsistantes en ajoutant la nouvelle quantity exsistante//
+    //vérifier si la clé existe déjà dans le localStorage//
     const storedData = JSON.parse(localStorage.getItem(key))
     if(storedData){
+        //modifier les donnéés existantes//
         storedData.quantity += Number(quantity)
+        //ajouter de nouvelles données//
         localStorage.setItem(key, JSON.stringify(storedData))
     }
     else{localStorage.setItem(key, JSON.stringify(data))
     }
 }
-    
     
 
 // si c'est mal rempli message d erreur//
@@ -106,6 +109,8 @@ function isOrderInvalid(color, quantity) {
         return true
     }
 } 
+
+//redirige vers le panier//
 function redirectToCart() {
     window.location.href = "cart.html"
 }    
