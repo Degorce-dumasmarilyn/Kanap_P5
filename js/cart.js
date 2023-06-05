@@ -50,7 +50,8 @@ function displayTotalPrice() {
   const total = cart.reduce((total, item) => total + item.price * item.quantity, 0)
   totalPrice.textContent = total
 }
-
+//fonction crée un élément div avec une classe "cartitemcontent". Ensuite,
+// elle fait appel à deux autres fonctions, "makeDescription" et "makeSettings", pour créer d'autres éléments//
 function makeCartContent(item) {
   const cardItemContent = document.createElement("div")
   cardItemContent.classList.add("cart__item__content")
@@ -61,8 +62,9 @@ function makeCartContent(item) {
   cardItemContent.appendChild(description)
   cardItemContent.appendChild(settings)
   return cardItemContent
-  
 }  
+  
+// fonction crée un élément HTML div et lui ajoute la classe "cartitemcontent__settings".//
 
 function makeSettings(item) {
   const settings = document.createElement("div")
@@ -71,7 +73,8 @@ function makeSettings(item) {
   addDeleteToSettings(settings, item)
   return settings
 }
-//bouton supprime//
+
+//Cette fonction sert à ajouter une option de suppression à un élément dans un panier (cart) et créer le bouton supp//
 function addDeleteToSettings(settings, item) {
   const div = document.createElement("div")
   div.classList.add("cart__item__content__settings__delete")
@@ -82,7 +85,9 @@ function addDeleteToSettings(settings, item) {
   div.appendChild(p)
   settings.appendChild(div)
 }
-
+//Cette fonction sert à supprimer un élément du panier (cart) en fonction de son id et de sa couleur.//
+//Elle supprime ensuite les données de cache correspondantes//
+// elle met à jour les affichages du prix total et de la quantité totale//
 function deleteItem(item){
   const itemToDelete = cart.findIndex(
   (product) => product.id === item.id && product.color === item.color)
@@ -93,12 +98,19 @@ function deleteItem(item){
   deleteArticleFromPage(item)
 }
 
+//Cette fonction sert à supprimer un élément d'article spécifique//
+//"querySelector" pour trouver l'élément correspondant//
+//"remove" pour supprimer l'élément de la page.//
 function deleteArticleFromPage(item){
   const articleToDelete = document.querySelector(
     `article[data-id="${item.id}"][data-color="${item.color}"]`)
   articleToDelete.remove()
 }
 
+//Fonction permet d'ajouter une section de quantité à un élément d'un panier.//
+//Elle crée un élément div avec une classe "cartitemcontentsettingsquantity"(contient "Qté" un "input"//
+//Lorsque la quantité est modifiée, l'événement déclenche une fonction updatePriceAndQuantity()//
+//Qui met à jour le prix et la quantité de l'article dans le panier.//
 function addQuatityToSettings(settings, item) {saveNewDataToCache
   const quantity = document.createElement("div")
   quantity.classList.add("cart__item__content__settings__quantity")
