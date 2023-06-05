@@ -1,12 +1,11 @@
-//-------------------------------------------------------------------------------------------
-//interroge la base de données et récupération des produits pour les afficher sur la page d'accueil//
-//-------------------------------------------------------------------------------------------
+
+//fonction addProducts reçoit les données en format JSON sous forme de paramètre//
+// et boucle à travers chaque objet dans la liste de données.//
+
 fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => addProducts(data))
-
-  //fonction addProducts reçoit les données en format JSON sous forme de paramètre//
-  // et boucle à travers chaque objet dans la liste de données.//
+ 
  function addProducts(data) {
   
   data.forEach((kanap) => {
