@@ -1,11 +1,18 @@
+//variable "cart" qui est un tableau vide, puis récupère les éléments de cache à l'aide de la fonction "retrieveItemsFromCache" et //
+//affiche chaque élément du panier en utilisant la méthode "forEach" //
+//et la fonction "displayItem".//
 const cart = []
 
 retrieveItemsFromCache()
 cart.forEach((item) => displayItem (item))
 
+//pour ajouter un événement "click" au bouton d'ordre (orderButton) qui déclenche la fonction "submitForm".//
 const orderButton = document.querySelector("#order")
 orderButton.addEventListener("click", (e) => submitForm(e))
-//parse fabrique un objet//
+
+//La fonction "retrieveItemsFromCache" utilise la méthode "localStorage.getItem"
+// pour récupérer les éléments stockés localement sous forme de chaîne,//
+//et avec JSON.parse pour transformer chaque chaîne en objet avant de l'ajouter au tableau "cart".//
 function retrieveItemsFromCache() {
   const numberOfItems = localStorage.length 
   for (let i = 0; i < numberOfItems; i++) {
@@ -19,7 +26,8 @@ function displayTotalPrice(item) {
   const totalQuantity = document.querySelector("#totalQuantity")
   totalQuantity.textContent = item.quantity
 }
-//toutes les fonctions dans le item//
+//la fonction "displayItem" crée un article HTML avec les informations de l'objet "item",//
+//
 function displayItem(item) {
   const article = makeArticle(item)
   const imageDiv = makeImageDiv(item)
@@ -30,13 +38,13 @@ function displayItem(item) {
   displayTotalQuantity(item)
   displayTotalPrice()
 }
-//recalcul//
+//permet d'afficher la quantité totale d'articles dans le panier sur la page web.//
 function displayTotalQuantity() {
   const totalQuantity = document.querySelector("#totalQuantity")
   const total = cart.reduce((total, item) => total + item.quantity, 0)
   totalQuantity.textContent = total
 }
-//recalcul//
+//permet d'afficher le prix totale d'articles dans le panier sur la page web.//
 function displayTotalPrice() {
   const totalPrice = document.querySelector("#totalPrice")
   const total = cart.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -114,7 +122,7 @@ function addQuatityToSettings(settings, item) {saveNewDataToCache
 //Cette fonction sert à mettre à jour la quantité et le prix d'un article dans un panier //
 //Elle prend en paramètre l'identifiant de l'article//
 //La fonction recherche d'abord l'article correspondant dans le tableau de panier (cart) en utilisant l'identifiant fourni.//
-// Ensuite, elle met à jour la quantité de l'article à la nouvelle valeur fournie et met également à jour la quantité de l'objet 'item'.// 
+//Ensuite, elle met à jour la quantité de l'article à la nouvelle valeur fournie et met également à jour la quantité de l'objet 'item'.// 
 //La fonction affiche ensuite la quantité et le prix total du panier en appelant les fonctions 'displayTotalQuantity' et 'displayTotalPrice'.// 
 //Enfin, elle enregistre les données mises à jour dans le cache en appelant la fonction 'saveNewDataToCache'.//
 function updatePriceAndQuantity(id, newValue, item) {

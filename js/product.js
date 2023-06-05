@@ -7,11 +7,12 @@ if (id != null) {
     let itemPrice = 0
     let imgUrl, altText, articleName
 }
-//requête server//
+//renvoie une requête server//
 fetch (`http://localhost:3000/api/products/${id}`)
 .then((response) => response.json())
 .then(res => handleData(res))
-//récuperation des données//
+//La fonction handleData extrait ensuite les informations nécessaires du produit reçu en tant que paramètre et 
+//utilise ces informations pour créer des éléments HTML pour afficher les détails du produit//
 function handleData(kanap) {
     const { altTxt, colors, description, imageUrl, name, price } = kanap
     itemPrice = price
@@ -25,7 +26,8 @@ function handleData(kanap) {
     makeColors(colors)
     
 }
-//fonction cherche un élément DOM spécifique avec la classe "item__img" et y ajoute l'image à l'aide de la méthode appendChild()//
+//fonction cherche un élément DOM spécifique avec la classe "item__img" et//
+// y ajoute l'image à l'aide de la méthode appendChild()//
 function makeImage(imageUrl, altTxt) {
     const image = document.createElement("img")
     image.src = imageUrl
