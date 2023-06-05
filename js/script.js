@@ -5,7 +5,8 @@ fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => addProducts(data))
 
-  
+  //fonction addProducts reçoit les données en format JSON sous forme de paramètre//
+  // et boucle à travers chaque objet dans la liste de données.//
  function addProducts(data) {
   
   data.forEach((kanap) => {
@@ -21,20 +22,23 @@ fetch("http://localhost:3000/api/products")
   appendArticleToAnchor(anchor, article)
  }) 
 } 
-// rajout a l article//
+// rajout des éléments à l article//
 function appendElementsToArticle(article, image, h3, p) {
   article.appendChild(image)
   article.appendChild(h3)
   article.appendChild(p)
 }
 
-//recuperation de ID//
+//La fonction "makeAnchor(id)" crée un lien HTML ("a") et lui attribue un attribut "href" qui est//
+// l'URL de la page "product.html" avec un paramètre "id" que nous lui passons en argument. //
+//La fonction renvoie ensuite ce lien HTML créé.//
 function makeAnchor(id) {
   const anchor = document.createElement("a")
   anchor.href = "./product.html?id=" + id
   return anchor
 }
-//descriptif+fab de l'article//
+//fonction prend en entrée deux paramètres : un élément ancre (anchor) et un élément article (article).//
+// La fonction recherche ensuite un élément dans le document avec l'ID "items" et vérifie s'il existe.//
 
 function appendArticleToAnchor(anchor, article) {
   const items = document.querySelector("#items")
